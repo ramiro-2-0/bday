@@ -2,7 +2,7 @@
 
 /* =============================================
    BRIGHT & SUNNY DESIGN SYSTEM - Namrata's Birthday 🎂🌻
-   Theme: Bubu & Dudu Sunny Meadow & Sky
+   Theme: Bubu & Dudu Sunny Meadow & Sky (PWA & Mobile Ready)
    ============================================= */
 
 :root {
@@ -39,7 +39,7 @@
   --font-body: 'Fredoka', 'Nunito', sans-serif;
 
   /* Glassmorphism on Bright Theme */
-  --glass-bg: rgba(255, 255, 255, 0.88);
+  --glass-bg: rgba(255, 255, 255, 0.9);
   --glass-border: rgba(255, 255, 255, 0.95);
   --shadow-warm: 0 12px 36px rgba(139, 94, 60, 0.12), 0 4px 12px rgba(255, 101, 132, 0.08);
   --shadow-btn: 0 8px 24px rgba(255, 101, 132, 0.35);
@@ -58,10 +58,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 body {
@@ -70,7 +72,9 @@ body {
   color: var(--text-dark);
   overflow-x: hidden;
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   letter-spacing: 0.2px;
+  touch-action: manipulation;
 }
 
 /* Custom Scrollbar */
@@ -168,7 +172,7 @@ body {
 }
 
 /* =============================================
-   GLASS CARDS (Bright & Cheerful)
+   GLASS CARDS
    ============================================= */
 
 .glass-card {
@@ -186,7 +190,7 @@ body {
 }
 
 /* =============================================
-   BUTTONS (Bouncy, Cheerful, Bright)
+   BUTTONS
    ============================================= */
 
 .btn-primary {
@@ -209,6 +213,7 @@ body {
   text-shadow: 0 2px 4px rgba(180, 40, 70, 0.3);
   position: relative;
   overflow: hidden;
+  user-select: none;
 }
 
 .btn-primary:hover {
@@ -238,6 +243,7 @@ body {
   transition: var(--transition-bounce);
   box-shadow: 0 8px 24px rgba(255, 170, 50, 0.35);
   text-decoration: none;
+  user-select: none;
 }
 
 .btn-secondary:hover {
@@ -262,6 +268,7 @@ body {
   transition: var(--transition-bounce);
   text-decoration: none;
   box-shadow: 0 4px 14px rgba(100, 60, 30, 0.08);
+  user-select: none;
 }
 
 .btn-ghost:hover {
@@ -291,7 +298,7 @@ body {
 }
 
 /* =============================================
-   NAVBAR
+   NAVBAR (Desktop Top, Mobile Floating Bottom)
    ============================================= */
 
 .navbar {
@@ -303,6 +310,7 @@ body {
   padding: 16px 20px;
   display: flex;
   justify-content: center;
+  pointer-events: none;
 }
 
 .navbar-inner {
@@ -310,12 +318,13 @@ body {
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 2.5px solid rgba(255, 255, 255, 0.9);
   border-radius: var(--radius-full);
   box-shadow: 0 8px 28px rgba(70, 40, 20, 0.12);
+  pointer-events: auto;
 }
 
 .nav-link {
@@ -366,12 +375,12 @@ body {
 }
 
 .page-header-title {
-  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-size: clamp(2.2rem, 6vw, 4rem);
   margin-bottom: 12px;
 }
 
 .page-header-sub {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   color: var(--text-mid);
   font-weight: 600;
   max-width: 600px;
@@ -390,7 +399,7 @@ body {
   min-height: 100vh;
   text-align: center;
   padding-top: 96px;
-  padding-bottom: 80px;
+  padding-bottom: 90px;
   position: relative;
   z-index: 2;
 }
@@ -412,18 +421,18 @@ body {
 }
 
 .landing-title {
-  font-size: clamp(2.8rem, 8vw, 5.5rem);
-  margin-bottom: 12px;
+  font-size: clamp(2.4rem, 7.5vw, 5.5rem);
+  margin-bottom: 10px;
 }
 
 .landing-subtitle {
-  font-size: clamp(1.2rem, 3.2vw, 1.9rem);
+  font-size: clamp(1.1rem, 3vw, 1.8rem);
   color: var(--text-mid);
   font-weight: 700;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
-/* Speech Bubble for Bubu & Dudu */
+/* Speech Bubble */
 .speech-bubble {
   position: relative;
   background: #FFFFFF;
@@ -438,8 +447,9 @@ body {
   font-weight: 800;
   color: var(--text-dark);
   box-shadow: 0 8px 20px rgba(56, 36, 23, 0.15);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   animation: floatBubble 2.5s ease-in-out infinite alternate;
+  max-width: 90vw;
 }
 
 .speech-bubble::after {
@@ -475,13 +485,12 @@ body {
   100% { transform: translateY(-8px); }
 }
 
-/* 3-Time Blow Interaction Area */
 .blow-meter-container {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  margin: 16px 0 24px;
+  margin: 16px 0 20px;
 }
 
 .blow-step-dot {
@@ -500,7 +509,7 @@ body {
 }
 
 /* =============================================
-   WISHES PAGE (Bright Card Grid)
+   WISHES PAGE
    ============================================= */
 
 .wishes-grid {
@@ -538,73 +547,7 @@ body {
 }
 
 /* =============================================
-   MEMORIES PAGE (Polaroid / Photo Style)
-   ============================================= */
-
-.memories-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-  gap: 32px;
-  padding: 10px 0 40px;
-}
-
-.memory-card {
-  background: #FFFFFF;
-  border: 3.5px solid #382417;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  box-shadow: 0 10px 24px rgba(56, 36, 23, 0.12);
-  transition: var(--transition-bounce);
-}
-
-.memory-card:hover {
-  transform: translateY(-10px) rotate(1.5deg) scale(1.02);
-}
-
-.memory-img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  display: block;
-}
-
-.memory-content {
-  padding: 24px;
-}
-
-.memory-title {
-  font-family: var(--font-display);
-  font-size: 1.45rem;
-  color: var(--text-dark);
-  margin-bottom: 10px;
-}
-
-.memory-desc {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: var(--text-mid);
-  margin-bottom: 16px;
-  font-weight: 500;
-}
-
-.memory-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.memory-tag {
-  padding: 5px 14px;
-  background: #FFF0F5;
-  border: 2px solid var(--pink-soft);
-  border-radius: var(--radius-full);
-  font-size: 0.85rem;
-  color: var(--pink-main);
-  font-weight: 700;
-}
-
-/* =============================================
-   LOVE LETTER (Cute Parchment / Letter)
+   LOVE LETTER
    ============================================= */
 
 .letter-page {
@@ -612,7 +555,7 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding: 110px 24px 80px;
+  padding: 110px 24px 90px;
 }
 
 .letter-paper {
@@ -658,7 +601,7 @@ body {
 }
 
 /* =============================================
-   FLOATING SUNNY PARTICLES
+   FLOATING PARTICLES
    ============================================= */
 
 .floating-heart {
@@ -677,13 +620,79 @@ body {
 }
 
 /* =============================================
-   RESPONSIVE ADJUSTMENTS
+   📱 MOBILE OPTIMIZATIONS (PWA & iOS / Android)
    ============================================= */
 
 @media (max-width: 768px) {
-  .navbar-inner { padding: 6px 12px; gap: 4px; }
-  .nav-link { padding: 6px 12px; font-size: 0.85rem; }
-  .letter-paper { padding: 36px 24px; }
-  .wishes-grid, .memories-grid { grid-template-columns: 1fr; }
-  .bg-landscape { height: 35vh; }
+  /* Move Navbar to bottom bar on mobile like native iOS/Android apps */
+  .navbar {
+    top: auto;
+    bottom: max(10px, env(safe-area-inset-bottom));
+    padding: 0 12px;
+  }
+
+  .navbar-inner {
+    width: 100%;
+    max-width: 440px;
+    justify-content: space-around;
+    padding: 6px 8px;
+    box-shadow: 0 10px 32px rgba(56, 36, 23, 0.25);
+    border: 3px solid #382417;
+  }
+
+  .nav-link {
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    border-radius: 14px;
+  }
+
+  .nav-link .nav-emoji {
+    font-size: 1.25rem;
+  }
+
+  .nav-link.active {
+    transform: scale(1.08);
+  }
+
+  /* Adjust Page Padding for Bottom Nav */
+  .page {
+    padding-bottom: 90px;
+  }
+
+  .page-header {
+    padding: max(40px, env(safe-area-inset-top)) 16px 24px;
+  }
+
+  .landing-page {
+    padding-top: max(32px, env(safe-area-inset-top));
+    padding-bottom: 100px;
+  }
+
+  .speech-bubble {
+    font-size: 0.95rem;
+    padding: 10px 18px;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+
+  .letter-paper {
+    padding: 32px 20px;
+  }
+
+  .letter-greeting {
+    font-size: 1.7rem;
+  }
+
+  .letter-body {
+    font-size: 1.35rem;
+    line-height: 1.65;
+  }
+
+  .bg-landscape {
+    height: 35vh;
+  }
 }

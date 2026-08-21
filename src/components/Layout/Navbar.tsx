@@ -9,7 +9,7 @@ const NAV_ITEMS = [
   { to: '/cake', label: 'Cake', emoji: '🎂' },
 ];
 
-const Navbar: React.FC = () => {
+export const Navbar: React.FC = () => {
   return (
     <nav className="navbar">
       <div className="navbar-inner">
@@ -20,8 +20,8 @@ const Navbar: React.FC = () => {
             end={to === '/'}
             className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}
           >
-            <span>{emoji}</span>
-            <span>{label}</span>
+            <span className="nav-emoji">{emoji}</span>
+            <span className="nav-text">{label}</span>
           </NavLink>
         ))}
       </div>
