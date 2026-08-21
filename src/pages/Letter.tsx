@@ -44,28 +44,28 @@ export const Letter: React.FC = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.8, type: 'spring', stiffness: 260 }}
           >
-            {/* Cute Postage Stamp in Corner */}
-            <div
-              style={{
-                position: 'absolute',
-                top: '24px',
-                right: '24px',
-                border: '2.5px dashed #FF6584',
-                padding: '8px 12px',
-                borderRadius: '8px',
-                background: '#FFF0F5',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                transform: 'rotate(4deg)',
-              }}
-            >
-              <span style={{ fontSize: '1.4rem' }}>🐻❤️🐼</span>
-              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#FF6584' }}>AIR MAIL</span>
+            {/* Top Bar with Stamp */}
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '8px' }}>
+              <div
+                style={{
+                  border: '2.5px dashed #FF6584',
+                  padding: '6px 12px',
+                  borderRadius: '8px',
+                  background: '#FFF0F5',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  transform: 'rotate(2deg)',
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.06)',
+                }}
+              >
+                <span style={{ fontSize: '1.3rem' }}>🐻❤️🐼</span>
+                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#FF6584' }}>AIR MAIL</span>
+              </div>
             </div>
 
             {/* Greeting */}
-            <p className="letter-greeting">{data.loveLetter.greeting}</p>
+            <p className="letter-greeting" style={{ marginTop: '0' }}>{data.loveLetter.greeting}</p>
 
             {/* Letter Body */}
             <p className="letter-body">{data.loveLetter.body}</p>

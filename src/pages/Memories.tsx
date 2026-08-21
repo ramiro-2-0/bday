@@ -23,7 +23,7 @@ export const Memories: React.FC = () => {
   return (
     <div style={{ paddingBottom: '90px' }}>
       {/* Header */}
-      <div className="page-header container">
+      <div className="page-header container" style={{ marginBottom: '20px' }}>
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
