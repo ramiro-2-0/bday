@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import BubuAnimation from '../components/BubuDudu/BubuAnimation';
 import DuduAnimation from '../components/BubuDudu/DuduAnimation';

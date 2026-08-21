@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import BubuDuduHero from '../components/BubuDudu/BubuDuduHero';
 import { sounds } from '../utils/sounds';

@@ -1,16 +1,17 @@
 import React from 'react';
 import { useQuery } from '@apollo/client/react';
 import { motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import { GET_WISHES } from '../graphql/queries';
 import type { BirthdayWish } from '../types';
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: { opacity: 0, scale: 0.85, y: 30 },
   visible: (i: number) => ({
     opacity: 1,
     scale: 1,
     y: 0,
-    transition: { duration: 0.5, delay: i * 0.1, type: 'spring', stiffness: 350 },
+    transition: { duration: 0.5, delay: i * 0.1, type: 'spring' as const, stiffness: 350 },
   }),
 };
 

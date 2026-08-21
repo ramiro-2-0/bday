@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/client/react';
 import { motion, AnimatePresence } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import { GET_MEMORIES } from '../graphql/queries';
 import type { Memory } from '../types';
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: { opacity: 0, y: 40, scale: 0.92 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { duration: 0.6, delay: i * 0.12, type: 'spring', stiffness: 280, damping: 20 },
+    transition: { duration: 0.6, delay: i * 0.12, type: 'spring' as const, stiffness: 280, damping: 20 },
   }),
 };
 
