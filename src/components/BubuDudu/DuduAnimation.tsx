@@ -4,107 +4,187 @@ import { motion } from 'framer-motion';
 interface Props {
   size?: number;
   animate?: boolean;
-  flipped?: boolean;
+  isCelebrating?: boolean;
 }
 
-// Dudu - the blue bear 💙
-const DuduAnimation: React.FC<Props> = ({ size = 160, animate = true, flipped = false }) => {
-  const idleVariants = animate ? {
-    body: {
-      y: [0, -6, 0],
-      transition: { duration: 2.8, repeat: Infinity, ease: 'easeInOut', delay: 0.3 },
-    },
-    eye: {
-      scaleY: [1, 0.1, 1],
-      transition: { duration: 3, repeat: Infinity, repeatDelay: 2.5, ease: 'easeInOut', delay: 0.5 },
-    },
-  } : {};
-
+// Dudu - The cute white panda bear with pink backpack 🐼
+export const DuduAnimation: React.FC<Props> = ({ size = 180, animate = true, isCelebrating = false }) => {
   return (
     <motion.div
       style={{
         width: size,
-        height: size * 1.2,
+        height: size * 1.15,
         position: 'relative',
         display: 'inline-block',
-        transform: flipped ? 'scaleX(-1)' : undefined,
+        filter: 'drop-shadow(0 8px 16px rgba(100, 60, 30, 0.15))',
       }}
+      animate={
+        isCelebrating
+          ? {
+              y: [0, -22, 0, -16, 0],
+              rotate: [0, 6, -6, 4, 0],
+              transition: { duration: 1.2, repeat: Infinity, ease: 'easeInOut', delay: 0.1 },
+            }
+          : animate
+          ? {
+              y: [0, -6, 0],
+              transition: { duration: 2.4, repeat: Infinity, ease: 'easeInOut', delay: 0.3 },
+            }
+          : undefined
+      }
     >
-      <motion.svg
-        viewBox="0 0 160 192"
+      <svg
+        viewBox="0 0 180 200"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        width={size}
-        height={size * 1.2}
-        animate={animate ? idleVariants.body : undefined}
+        style={{ width: '100%', height: '100%', overflow: 'visible' }}
       >
-        {/* Shadow */}
-        <ellipse cx="80" cy="188" rx="38" ry="6" fill="rgba(0,0,0,0.15)" />
+        {/* Soft Shadow */}
+        <ellipse cx="90" cy="192" rx="45" ry="8" fill="rgba(80, 50, 20, 0.18)" />
 
-        {/* Body */}
-        <ellipse cx="80" cy="145" rx="46" ry="44" fill="#A8C8FF" />
+        {/* Pink Backpack (right side) */}
+        <g>
+          <rect
+            x="132"
+            y="112"
+            width="26"
+            height="46"
+            rx="12"
+            fill="#FF809F"
+            stroke="#352317"
+            strokeWidth="4"
+            transform="rotate(6 132 112)"
+          />
+          <path d="M136 122 Q144 140 142 152" stroke="#FF5C85" strokeWidth="4" strokeLinecap="round" />
+          
+          {/* Little Brown Bear Keychain Charm dangling on backpack! */}
+          <g transform="translate(142, 142)">
+            <circle cx="8" cy="8" r="7" fill="#8B5E3C" stroke="#2B1810" strokeWidth="2.5" />
+            <circle cx="3" cy="3" r="3" fill="#8B5E3C" stroke="#2B1810" strokeWidth="2" />
+            <circle cx="13" cy="3" r="3" fill="#8B5E3C" stroke="#2B1810" strokeWidth="2" />
+            <circle cx="6" cy="7" r="1" fill="#2B1810" />
+            <circle cx="10" cy="7" r="1" fill="#2B1810" />
+          </g>
+        </g>
 
-        {/* Tummy */}
-        <ellipse cx="80" cy="148" rx="26" ry="22" fill="#D6E8FF" />
+        {/* Body (White Chubby Panda) */}
+        <path
+          d="M48 100 C48 70 132 70 132 100 C134 140 130 178 116 186 C102 192 78 192 64 186 C50 178 46 140 48 100 Z"
+          fill="#FFFFFF"
+          stroke="#352317"
+          strokeWidth="4.5"
+          strokeLinejoin="round"
+        />
 
-        {/* Legs */}
-        <ellipse cx="60" cy="182" rx="18" ry="12" fill="#7EB3FF" />
-        <ellipse cx="100" cy="182" rx="18" ry="12" fill="#7EB3FF" />
+        {/* Dark Collar / Scarf */}
+        <path
+          d="M58 115 C75 125 105 125 122 115 C118 126 105 132 90 132 C75 132 62 126 58 115 Z"
+          fill="#3B261D"
+        />
 
-        {/* Feet dots */}
-        <circle cx="55" cy="185" r="3" fill="#5B9BFF" />
-        <circle cx="60" cy="187" r="3" fill="#5B9BFF" />
-        <circle cx="65" cy="185" r="3" fill="#5B9BFF" />
-        <circle cx="95" cy="185" r="3" fill="#5B9BFF" />
-        <circle cx="100" cy="187" r="3" fill="#5B9BFF" />
-        <circle cx="105" cy="185" r="3" fill="#5B9BFF" />
-
-        {/* Arms */}
-        <ellipse cx="36" cy="148" rx="14" ry="18" fill="#A8C8FF" transform="rotate(-15 36 148)" />
-        <ellipse cx="124" cy="148" rx="14" ry="18" fill="#A8C8FF" transform="rotate(15 124 148)" />
+        {/* Feet / Paws */}
+        <ellipse cx="68" cy="186" rx="16" ry="10" fill="#FFFFFF" stroke="#352317" strokeWidth="4" />
+        <ellipse cx="112" cy="186" rx="16" ry="10" fill="#FFFFFF" stroke="#352317" strokeWidth="4" />
 
         {/* Head */}
-        <motion.g animate={animate ? idleVariants.body : undefined}>
-          <circle cx="80" cy="88" r="52" fill="#A8C8FF" />
+        <g>
+          {/* Left Ear (Dark Chocolate Brown) */}
+          <circle cx="48" cy="52" r="22" fill="#3B261D" stroke="#352317" strokeWidth="4.5" />
 
-          {/* Left ear */}
-          <motion.g animate={animate ? { rotate: [-3, 3, -3], transition: { duration: 2, repeat: Infinity, ease: 'easeInOut' } } : undefined} style={{ originX: '42px', originY: '50px' }}>
-            <circle cx="42" cy="50" r="18" fill="#A8C8FF" />
-            <circle cx="42" cy="50" r="10" fill="#7EB3FF" />
-          </motion.g>
+          {/* Right Ear (Dark Chocolate Brown) */}
+          <circle cx="132" cy="52" r="22" fill="#3B261D" stroke="#352317" strokeWidth="4.5" />
 
-          {/* Right ear */}
-          <motion.g animate={animate ? { rotate: [3, -3, 3], transition: { duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 0.2 } } : undefined} style={{ originX: '118px', originY: '50px' }}>
-            <circle cx="118" cy="50" r="18" fill="#A8C8FF" />
-            <circle cx="118" cy="50" r="10" fill="#7EB3FF" />
-          </motion.g>
+          {/* Head Main (White) */}
+          <ellipse
+            cx="90"
+            cy="88"
+            rx="56"
+            ry="48"
+            fill="#FFFFFF"
+            stroke="#352317"
+            strokeWidth="4.5"
+            strokeLinejoin="round"
+          />
 
-          {/* Cheeks */}
-          <circle cx="54" cy="98" r="12" fill="#7EB3FF" opacity="0.5" />
-          <circle cx="106" cy="98" r="12" fill="#7EB3FF" opacity="0.5" />
+          {/* Sweet Pink Blush Cheeks */}
+          <ellipse cx="54" cy="98" rx="14" ry="10" fill="#FF9BB2" opacity="0.95" />
+          <ellipse cx="126" cy="98" rx="14" ry="10" fill="#FF9BB2" opacity="0.95" />
 
           {/* Eyes */}
-          <motion.g animate={animate ? idleVariants.eye : undefined} style={{ originY: '82px' }}>
-            <ellipse cx="66" cy="82" rx="7" ry="8" fill="#2D1B35" />
-            <circle cx="68" cy="80" r="2.5" fill="white" />
-          </motion.g>
-          <motion.g animate={animate ? idleVariants.eye : undefined} style={{ originY: '82px' }}>
-            <ellipse cx="94" cy="82" rx="7" ry="8" fill="#2D1B35" />
-            <circle cx="96" cy="80" r="2.5" fill="white" />
-          </motion.g>
+          {isCelebrating ? (
+            // Joyful Happy Crescent Eyes
+            <>
+              <path d="M66 84 Q74 76 80 84" stroke="#2B1810" strokeWidth="4.5" strokeLinecap="round" fill="none" />
+              <path d="M100 84 Q106 76 114 84" stroke="#2B1810" strokeWidth="4.5" strokeLinecap="round" fill="none" />
+            </>
+          ) : (
+            // Cute Shiny Round Eyes
+            <>
+              <ellipse cx="72" cy="84" rx="6.5" ry="7" fill="#2B1810" />
+              <circle cx="74.5" cy="82" r="2.5" fill="white" />
+              <ellipse cx="108" cy="84" rx="6.5" ry="7" fill="#2B1810" />
+              <circle cx="110.5" cy="82" r="2.5" fill="white" />
+            </>
+          )}
 
-          {/* Nose */}
-          <ellipse cx="80" cy="96" rx="6" ry="4" fill="#5B9BFF" />
+          {/* Cute Tiny Nose/Mouth */}
+          <path
+            d="M86 94 Q90 98 94 94"
+            stroke="#2B1810"
+            strokeWidth="3.5"
+            strokeLinecap="round"
+            fill="none"
+          />
+        </g>
 
-          {/* Mouth - small smile */}
-          <path d="M73 103 Q80 110 87 103" stroke="#5B9BFF" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+        {/* Left Arm (holding Bubu's hand or raised in joy!) */}
+        <motion.path
+          d={
+            isCelebrating
+              ? "M56 115 Q35 95 28 82"
+              : "M58 120 Q35 130 28 122"
+          }
+          stroke="#352317"
+          strokeWidth="13"
+          strokeLinecap="round"
+          fill="none"
+        />
+        <motion.path
+          d={
+            isCelebrating
+              ? "M56 115 Q35 95 28 82"
+              : "M58 120 Q35 130 28 122"
+          }
+          stroke="#FFFFFF"
+          strokeWidth="6"
+          strokeLinecap="round"
+          fill="none"
+        />
 
-          {/* Cap / Accessory */}
-          <path d="M28 78 Q80 28 132 78" fill="#5B9BFF" />
-          <rect x="22" y="74" width="116" height="12" rx="6" fill="#7EB3FF" />
-          <circle cx="80" cy="36" r="8" fill="#FFB7C5" />
-        </motion.g>
-      </motion.svg>
+        {/* Right Arm */}
+        <path
+          d={
+            isCelebrating
+              ? "M128 115 Q150 95 158 82"
+              : "M124 122 Q140 135 146 148"
+          }
+          stroke="#352317"
+          strokeWidth="12"
+          strokeLinecap="round"
+          fill="none"
+        />
+        <path
+          d={
+            isCelebrating
+              ? "M128 115 Q150 95 158 82"
+              : "M124 122 Q140 135 146 148"
+          }
+          stroke="#FFFFFF"
+          strokeWidth="5"
+          strokeLinecap="round"
+          fill="none"
+        />
+      </svg>
     </motion.div>
   );
 };

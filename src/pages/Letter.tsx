@@ -1,109 +1,80 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { useQuery } from '@apollo/client/react';
 import { motion } from 'framer-motion';
-import gsap from 'gsap';
 import { GET_LOVE_LETTER } from '../graphql/queries';
 import type { LoveLetter as LoveLetterType } from '../types';
 
-const Letter: React.FC = () => {
+export const Letter: React.FC = () => {
   const { data, loading } = useQuery<{ loveLetter: LoveLetterType }>(GET_LOVE_LETTER);
-  const letterRef = useRef<HTMLDivElement>(null);
-  const [revealed, setRevealed] = useState(false);
-
-  useEffect(() => {
-    if (!data || revealed) return;
-
-    // Animate letter elements in sequence
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ delay: 0.5 });
-      tl.from('.letter-paper', { y: 60, opacity: 0, duration: 0.8, ease: 'power3.out' })
-        .from('.letter-greeting', { opacity: 0, x: -30, duration: 0.7, ease: 'power2.out' }, '-=0.3')
-        .from('.letter-body', { opacity: 0, duration: 1.2, ease: 'power1.inOut' }, '-=0.2')
-        .from('.letter-closing', { opacity: 0, y: 10, duration: 0.5 }, '-=0.3')
-        .from('.letter-signature', { opacity: 0, scale: 0.7, duration: 0.6, ease: 'back.out(1.5)' })
-        .call(() => setRevealed(true));
-    }, letterRef);
-
-    return () => ctx.revert();
-  }, [data]);
 
   return (
-    <div className="letter-page" ref={letterRef}>
-      <div style={{ width: '100%', maxWidth: '720px' }}>
-        {/* Floating envelope icon */}
+    <div className="letter-page">
+      <div style={{ width: '100%', maxWidth: '750px' }}>
+        {/* Top Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          style={{ textAlign: 'center', marginBottom: '24px' }}
+          style={{ textAlign: 'center', marginBottom: '28px' }}
         >
-          <motion.span
-            style={{ fontSize: '3rem', display: 'inline-block' }}
-            animate={{ rotate: [-5, 5, -5] }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            💌
-          </motion.span>
-          <h1 className="heading-display" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', marginTop: '12px' }}>
-            A Letter For You
+          <div className="landing-badge" style={{ marginBottom: '14px' }}>
+            <span>💌</span>
+            <span>FOR NAMRATA'S EYES ONLY</span>
+            <span>💌</span>
+          </div>
+
+          <h1 className="heading-display" style={{ fontSize: 'clamp(2.2rem, 5vw, 3.4rem)' }}>
+            A Letter From My Heart 🌸
           </h1>
         </motion.div>
 
         {loading && (
-          <div className="loading-wrapper">
-            <div className="loading-dots">
-              <div className="loading-dot" />
-              <div className="loading-dot" />
-              <div className="loading-dot" />
-            </div>
+          <div style={{ textAlign: 'center', padding: '60px 0' }}>
+            <span style={{ fontSize: '3rem' }}>💌</span>
+            <p style={{ marginTop: '12px', fontSize: '1.2rem', color: 'var(--text-mid)', fontWeight: 700 }}>
+              Unfolding your letter...
+            </p>
           </div>
         )}
 
         {data && (
-          <div className="letter-paper">
-            {/* Decorative top border */}
-            <div style={{
-              height: '3px',
-              background: 'linear-gradient(90deg, transparent, var(--pink-500), var(--lavender), var(--pink-500), transparent)',
-              marginBottom: '40px',
-              borderRadius: '100px',
-            }} />
-
-            {/* Bubu & Dudu reading the letter deco */}
-            <div style={{ position: 'absolute', top: '16px', right: '16px', display: 'flex', gap: '-10px', opacity: 0.5 }}>
-              <span style={{ fontSize: '1.4rem' }}>🐻‍❄️</span>
-              <span style={{ fontSize: '1.4rem' }}>🐻</span>
+          <motion.div
+            className="letter-paper"
+            initial={{ opacity: 0, y: 40, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.8, type: 'spring', stiffness: 260 }}
+          >
+            {/* Cute Postage Stamp in Corner */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '24px',
+                right: '24px',
+                border: '2.5px dashed #FF6584',
+                padding: '8px 12px',
+                borderRadius: '8px',
+                background: '#FFF0F5',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                transform: 'rotate(4deg)',
+              }}
+            >
+              <span style={{ fontSize: '1.4rem' }}>🐻❤️🐼</span>
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#FF6584' }}>AIR MAIL</span>
             </div>
 
+            {/* Greeting */}
             <p className="letter-greeting">{data.loveLetter.greeting}</p>
+
+            {/* Letter Body */}
             <p className="letter-body">{data.loveLetter.body}</p>
-            <p className="letter-closing">{data.loveLetter.closing}</p>
-            <p className="letter-signature">{data.loveLetter.signature}</p>
 
-            {/* Bottom decoration */}
-            <div style={{
-              height: '3px',
-              background: 'linear-gradient(90deg, transparent, var(--pink-500), var(--lavender), var(--pink-500), transparent)',
-              marginTop: '40px',
-              borderRadius: '100px',
-            }} />
-          </div>
-        )}
-
-        {revealed && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            style={{ textAlign: 'center', marginTop: '32px' }}
-          >
-            <motion.div
-              animate={{ scale: [1, 1.2, 1], rotate: [0, 10, -10, 0] }}
-              transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
-              style={{ fontSize: '2.5rem', display: 'inline-block' }}
-            >
-              💖
-            </motion.div>
+            {/* Closing & Signature */}
+            <div style={{ marginTop: '36px', borderTop: '2px dashed #FFE4EC', paddingTop: '24px' }}>
+              <p className="letter-closing">{data.loveLetter.closing}</p>
+              <p className="letter-signature">{data.loveLetter.signature}</p>
+            </div>
           </motion.div>
         )}
       </div>

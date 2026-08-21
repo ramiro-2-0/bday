@@ -1,125 +1,95 @@
-import React, { useEffect, useRef } from 'react';
-import gsap from 'gsap';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import BubuAnimation from './BubuAnimation';
 import DuduAnimation from './DuduAnimation';
+import LandingCake from './LandingCake';
 
 interface Props {
-  onAnimationComplete?: () => void;
+  blowCount: number;
+  onBlow: () => void;
 }
 
-const BubuDuduHero: React.FC<Props> = ({ onAnimationComplete }) => {
-  const heartsRef = useRef<HTMLDivElement>(null);
-  const bubuRef = useRef<HTMLDivElement>(null);
-  const duduRef = useRef<HTMLDivElement>(null);
-  const cakeRef = useRef<HTMLDivElement>(null);
+export const BubuDuduHero: React.FC<Props> = ({ blowCount, onBlow }) => {
+  const isExtinguished = blowCount >= 3;
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ onComplete: onAnimationComplete });
-
-      // Initial positions off-screen
-      gsap.set(bubuRef.current, { x: -300, opacity: 0 });
-      gsap.set(duduRef.current, { x: 300, opacity: 0 });
-      gsap.set(cakeRef.current, { scale: 0, opacity: 0, y: 20 });
-
-      // 1. Bears slide in
-      tl.to(bubuRef.current, { x: 0, opacity: 1, duration: 1, ease: 'back.out(1.4)' })
-        .to(duduRef.current, { x: 0, opacity: 1, duration: 1, ease: 'back.out(1.4)' }, '<0.2')
-        // 2. Bears bounce toward each other
-        .to([bubuRef.current, duduRef.current], {
-          scale: 1.08,
-          duration: 0.3,
-          ease: 'power2.out',
-          yoyo: true,
-          repeat: 1,
-        })
-        // 3. Cake pop up
-        .to(cakeRef.current, {
-          scale: 1,
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: 'back.out(1.7)',
-        }, '-=0.2')
-        // 4. Burst hearts
-        .call(() => burstHearts(heartsRef.current));
-    });
-
-    return () => ctx.revert();
-  }, [onAnimationComplete]);
-
-  const burstHearts = (container: HTMLDivElement | null) => {
-    if (!container) return;
-    const heartEmojis = ['💖', '💕', '🌸', '✨', '💝', '🎂', '🎉', '💗'];
-    for (let i = 0; i < 18; i++) {
-      const heart = document.createElement('div');
-      heart.innerText = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
-      heart.style.cssText = `
-        position: absolute;
-        font-size: ${Math.random() * 16 + 16}px;
-        left: ${Math.random() * 100}%;
-        top: 50%;
-        pointer-events: none;
-        z-index: 10;
-      `;
-      container.appendChild(heart);
-      gsap.to(heart, {
-        y: -(Math.random() * 200 + 100),
-        x: (Math.random() - 0.5) * 200,
-        opacity: 0,
-        duration: Math.random() * 1.5 + 1,
-        ease: 'power2.out',
-        delay: Math.random() * 0.5,
-        onComplete: () => heart.remove(),
-      });
-    }
+  // Speech bubble text based on blow count
+  const getSpeechText = () => {
+    if (blowCount === 0) return 'Namrata! Blow the candle to make your wish! 🎂';
+    if (blowCount === 1) return '💨 Pffff! Good try! Blow harder! (1/3) 🌬️';
+    if (blowCount === 2) return '💨💨 Almost there! One BIG breath! (2/3) 🌬️';
+    return '🎉 YAY! HAPPY BIRTHDAY NAMRATA! 💖✨';
   };
 
   return (
-    <div style={{ position: 'relative', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: '0px' }}>
-      <div ref={heartsRef} style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'visible' }} />
-
-      {/* Bubu (pink bear) on left */}
-      <motion.div ref={bubuRef} style={{ display: 'inline-block' }}>
-        <BubuAnimation size={160} />
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
+      {/* Dynamic Speech Bubble */}
+      <motion.div
+        key={`speech-${blowCount}`}
+        initial={{ scale: 0.8, opacity: 0, y: 10 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+        className="speech-bubble"
+        style={{
+          borderColor: isExtinguished ? '#FF6584' : '#382417',
+          background: isExtinguished ? '#FFF0F5' : '#FFFFFF',
+        }}
+      >
+        <span style={{ fontSize: '1.4rem' }}>
+          {isExtinguished ? '🥳' : blowCount === 0 ? '🐻' : '🌬️'}
+        </span>
+        <span>{getSpeechText()}</span>
       </motion.div>
 
-      {/* Cake in the middle */}
-      <div ref={cakeRef} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '20px', padding: '0 8px' }}>
-        <svg viewBox="0 0 100 100" width="90" height="90" xmlns="http://www.w3.org/2000/svg">
-          {/* Candles */}
-          <rect x="38" y="12" width="6" height="20" rx="3" fill="#FF8DA1" />
-          <rect x="56" y="8" width="6" height="24" rx="3" fill="#C77DFF" />
-          {/* Flames */}
-          <ellipse cx="41" cy="10" rx="4" ry="6" fill="#FFD700" opacity="0.9">
-            <animate attributeName="ry" values="6;8;6" dur="0.8s" repeatCount="indefinite" />
-          </ellipse>
-          <ellipse cx="59" cy="6" rx="4" ry="6" fill="#FF7B7B" opacity="0.9">
-            <animate attributeName="ry" values="6;8;6" dur="0.7s" repeatCount="indefinite" begin="0.2s" />
-          </ellipse>
-          {/* Cake tiers */}
-          <rect x="22" y="48" width="56" height="26" rx="8" fill="#FF6B9D" />
-          <rect x="15" y="68" width="70" height="24" rx="8" fill="#FF8DA1" />
-          {/* Frosting drips */}
-          <ellipse cx="50" cy="48" rx="28" ry="8" fill="#FFD6E7" />
-          <ellipse cx="50" cy="68" rx="35" ry="8" fill="#FFD6E7" />
-          {/* Sprinkles */}
-          <rect x="30" y="55" width="8" height="3" rx="2" fill="#FFD700" transform="rotate(30 30 55)" />
-          <rect x="55" y="58" width="8" height="3" rx="2" fill="#A8C8FF" transform="rotate(-20 55 58)" />
-          <rect x="42" y="75" width="8" height="3" rx="2" fill="#C77DFF" transform="rotate(10 42 75)" />
-          <rect x="65" y="74" width="8" height="3" rx="2" fill="#FFB347" transform="rotate(-30 65 74)" />
-          {/* Stars */}
-          <text x="32" y="66" fontSize="8" fill="white">★</text>
-          <text x="58" y="63" fontSize="7" fill="#FFD700">★</text>
-        </svg>
-        <div style={{ fontSize: '0.7rem', color: 'rgba(255,183,197,0.7)', fontFamily: "'Nunito', sans-serif", marginTop: '-4px' }}>🎂</div>
+      {/* Characters + Cake in Sunny Meadow Scene */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'flex-end',
+          justifyContent: 'center',
+          gap: '8px',
+          position: 'relative',
+          margin: '10px 0 20px',
+        }}
+      >
+        {/* Bubu (Brown Bear) on Left */}
+        <div style={{ transform: 'translateX(20px)', zIndex: 3 }}>
+          <BubuAnimation size={170} isCelebrating={isExtinguished} />
+        </div>
+
+        {/* Interactive Cake with Candle in the Middle */}
+        <div style={{ zIndex: 4, margin: '0 -24px -10px' }}>
+          <LandingCake blowCount={blowCount} isBlown={blowCount} onBlow={onBlow} />
+        </div>
+
+        {/* Dudu (White Panda) on Right */}
+        <div style={{ transform: 'translateX(-20px)', zIndex: 3 }}>
+          <DuduAnimation size={170} isCelebrating={isExtinguished} />
+        </div>
       </div>
 
-      {/* Dudu (blue bear) on right, flipped */}
-      <motion.div ref={duduRef} style={{ display: 'inline-block', transform: 'scaleX(-1)' }}>
-        <DuduAnimation size={160} />
-      </motion.div>
+      {/* Celebration Hearts / Emojis popping out when blown */}
+      <AnimatePresence>
+        {isExtinguished && (
+          <motion.div
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: [0, 1.2, 1], opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            style={{
+              position: 'absolute',
+              top: '-30px',
+              display: 'flex',
+              gap: '16px',
+              fontSize: '2.5rem',
+              pointerEvents: 'none',
+              zIndex: 10,
+            }}
+          >
+            <motion.span animate={{ y: [-10, 10, -10], rotate: [-10, 10, -10] }} transition={{ duration: 1.5, repeat: Infinity }}>💖</motion.span>
+            <motion.span animate={{ y: [10, -10, 10], scale: [1, 1.3, 1] }} transition={{ duration: 1.2, repeat: Infinity }}>🎉</motion.span>
+            <motion.span animate={{ y: [-10, 10, -10], rotate: [10, -10, 10] }} transition={{ duration: 1.5, repeat: Infinity, delay: 0.2 }}>💕</motion.span>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

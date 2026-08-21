@@ -1,21 +1,22 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
+import BackgroundScene from '../Hearts/BackgroundScene';
 import FloatingHearts from '../Hearts/FloatingHearts';
 
-const Layout: React.FC = () => {
+export const Layout: React.FC = () => {
   return (
     <>
-      {/* Animated background */}
-      <div className="app-bg" />
+      {/* Sunny Meadow & Sky Landscape */}
+      <BackgroundScene />
 
-      {/* Global floating hearts */}
+      {/* Floating Hearts & Flowers */}
       <FloatingHearts />
 
-      {/* Navigation */}
+      {/* Modern Friendly Floating Navbar */}
       <Navbar />
 
-      {/* Page content */}
+      {/* Page Content */}
       <main className="page">
         <Outlet />
       </main>
