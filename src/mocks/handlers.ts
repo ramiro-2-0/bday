@@ -10,13 +10,18 @@ const wishes: BirthdayWish[] = [
   { id: '6', message: "Happy Birthday to the one who stole my heart and never gave it back — and I'm so glad 💝", emoji: '💝', color: '#FF8DA1' },
 ];
 
+import facemaskImg from '../assets/moments/facemask.png';
+import backhugImg from '../assets/moments/backhug.png';
+import sunsetImg from '../assets/moments/sunset_picnic.png';
+import legHugImg from '../assets/moments/leg_hug.png';
+
 const memories: Memory[] = [
   {
     id: '1',
     title: 'Our Goofy Skincare Nights 💆‍♀️✨',
     description: 'Black charcoal masks, messy hair buns, bathroom mirror selfies, and laughing at how silly we look together.',
     date: 'Cozy Evenings',
-    imageUrl: '/moments/facemask.png',
+    imageUrl: facemaskImg,
     tags: ['skincare nights', 'goofy', 'mirror selfie', 'cuties'],
   },
   {
@@ -24,7 +29,7 @@ const memories: Memory[] = [
     title: 'Warmest Hugs in Oversized Tees 🤍',
     description: 'Sneaking up behind you for a cozy backhug while you take a mirror selfie. You wearing my oversized tee is my favorite sight.',
     date: 'Always & Forever',
-    imageUrl: '/moments/backhug.png',
+    imageUrl: backhugImg,
     tags: ['backhug', 'comfort', 'cozy love', 'my safe place'],
   },
   {
@@ -32,7 +37,7 @@ const memories: Memory[] = [
     title: 'Sunset Picnics & Warm Coffee 🌅☕',
     description: 'Sitting side by side on our checkered blanket, sharing hot coffee, and watching the golden sunset with you.',
     date: 'Golden Hour',
-    imageUrl: '/moments/sunset_picnic.png',
+    imageUrl: sunsetImg,
     tags: ['sunset date', 'warm tea', 'peaceful', 'magic moments'],
   },
   {
@@ -40,7 +45,7 @@ const memories: Memory[] = [
     title: 'Never Letting You Go! 🧸💖',
     description: 'Wrapping my arms around your leg so you can never leave! Being silly, goofy, and endlessly in love with you.',
     date: 'Every Single Day',
-    imageUrl: '/moments/leg_hug.png',
+    imageUrl: legHugImg,
     tags: ['clingy love', 'pure joy', 'best laughs', 'forever'],
   },
 ];
